@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conembador", "Conembador\Conembador.csproj", "{2908E540-5ADF-4C51-91A6-2EE793D3987A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2908E540-5ADF-4C51-91A6-2EE793D3987A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2908E540-5ADF-4C51-91A6-2EE793D3987A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2908E540-5ADF-4C51-91A6-2EE793D3987A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2908E540-5ADF-4C51-91A6-2EE793D3987A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14EDE17D-462B-4901-B80F-BE61BF244449}
+	EndGlobalSection
+EndGlobal
