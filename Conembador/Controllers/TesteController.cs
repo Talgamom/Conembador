@@ -19,6 +19,12 @@ namespace Conembador.Controllers
         {
             return View("~/Views/Teste01/Teste001.cshtml");
         }
+        [HttpGet]
+        public IActionResult ApresentarEdi()
+        {
+            //return RedirectToPage("/Views/Teste01/ApresentarEdi"); // ainda não consegui fazer o Razer funcionar, ficará para imprementações futuras.
+            return View("~/Views/Teste01/ApresentarEdi.cshtml");
+        }
 
         [HttpPost]
         public async Task<IActionResult> EnviarRespostas(List<Itens> Itens)
