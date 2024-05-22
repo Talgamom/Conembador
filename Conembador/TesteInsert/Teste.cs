@@ -7,6 +7,7 @@ namespace TesteInsert
     public class TesteInsert01
     {
         // Construtor da classe TesteInsert01
+        /*
         public void TesteInsertAbc(List<Itens> Itens)
         {
             Console.WriteLine("Entrou aqui");
@@ -42,5 +43,6 @@ namespace TesteInsert
 
             return; // O retorno é opcional em um construtor
         }
+        */
     }
 }

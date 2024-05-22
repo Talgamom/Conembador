@@ -1,64 +1,29 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Formulário de Exemplo</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var contador = 0;
+﻿@model IEnumerable<Conembador.Models.Arquivo>
 
-            $("#adicionarCampo").click(function () {
-                contador++;
-                var novoCampo = '<div class="form-row">' +
-                    '<div class="form-group col-md-4">' +
-                    '<label for="Itens_' + contador + '__Descricao">Descricao:</label>' +
-                    '<input type="text" class="form-control" id="Itens_' + contador + '__Descricao" name="Itens[' + contador + '].Descricao">' +
-                    '</div>' +
+@{
+    ViewData["Title"] = "Listar Arquivos";
+}
 
-                    '<div class="form-group col-md-4">' +
-                    '<label for="Itens_' + contador + '__Inicio">Inicio:</label>' +
-                    '<input type="number" class="form-control" id="Itens_' + contador + '__Inicio" name="Itens[' + contador + '].Inicio">' +
-                    '</div>' +
+<h2>Arquivos</h2>
 
-                    '<div class="form-group col-md-4">' +
-                    '<label for="Itens_' + contador + '__Fim">Fim:</label>' +
-                    '<input type="number" class="form-control" id="Itens_' + contador + '__Fim" name="Itens[' + contador + '].Fim">' +
-                    '</div>' +
-                    '</div>';
-
-                $("#camposExtras").append(novoCampo);
-            });
-        });
-    </script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <h2>Conemb</h2>
-    <form asp-action="EnviarRespostas" asp-controller="Teste" method="post">
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Descricao">Descricao:</label>
-                <input type="text" class="form-control" id="Itens_0__Descricao" name="Itens[0].Descricao">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Inicio">Inicio:</label>
-                <input type="number" class="form-control" id="Itens_0__Inicio" name="Itens[0].Inicio">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Fim">Fim:</label>
-                <input type="number" class="form-control" id="Itens_0__Fim" name="Itens[0].Fim">
-            </div>
-        </div>
-
-        <div id="camposExtras"></div>
-
-        <button type="button" class="btn btn-primary" id="adicionarCampo">Adicionar Mais</button>
-        <button type="submit" class="btn btn-success">Enviar</button>
-    </form>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome Edi</th>
+            <th>Versão</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var arquivo in Model)
+        {
+            <tr>
+                <td>@arquivo.NomeEdi</td>
+                <td>@arquivo.Versao</td>
+                <td>
+                    <a asp-controller="Edi" asp-action="ApresentarEdi" asp-route-id="@arquivo.id_arquivo">Ver Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

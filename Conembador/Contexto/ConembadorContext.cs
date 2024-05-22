@@ -6,14 +6,18 @@ namespace Conembador.Contexto
 {
     public class ConembadorContext : DbContext
     {
+        public ConembadorContext(DbContextOptions<ConembadorContext> options) : base(options)
+        {
+        }
         public DbSet<Arquivo> Arquivos { get; set; }
         public DbSet<Itens> Itens { get; set; }
 
+        /*passado a usar o appsetting.json e o program.cs para configurar o banco.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=teste;Integrated Security=True;TrustServerCertificate=true;");
         }
-
+        */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Arquivo>().ToTable("arquivo");
