@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Conembador.Controllers
 {
-    public class ArquivoController : Controller
+    public class NaoUtilizarArquivoController : Controller
     {
         // GET: ArquivoController
         public ActionResult Index()

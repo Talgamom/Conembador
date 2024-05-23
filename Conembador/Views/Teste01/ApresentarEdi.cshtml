@@ -1,28 +1,26 @@
 ﻿@model IEnumerable<Conembador.Models.Arquivo>
 
 @{
-    ViewData["Title"] = "Listar Arquivos";
+    ViewData["Title"] = "Apresentar Arquivos";
 }
 
-<h2>Arquivos</h2>
+<h1>@ViewData["Title"]</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Nome Edi</th>
+            <th>ID</th>
+            <th>Nome EDI</th>
             <th>Versão</th>
-            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var arquivo in Model)
         {
             <tr>
+                <td>@arquivo.id_arquivo</td>
                 <td>@arquivo.NomeEdi</td>
                 <td>@arquivo.Versao</td>
-                <td>
-                    <a asp-controller="Edi" asp-action="ApresentarEdi" asp-route-id="@arquivo.id_arquivo">Ver Detalhes</a>
-                </td>
             </tr>
         }
     </tbody>

@@ -28,6 +28,7 @@ namespace Conembador.Controllers
         [HttpGet]
         public IActionResult ApresentarEdi()
         {
+            Console.WriteLine("Entrou aqui 01");
             //return RedirectToPage("/Views/Teste01/ApresentarEdi"); // ainda não consegui fazer o Razer funcionar, ficará para imprementações futuras.
             return View("~/Views/Teste01/ApresentarEdi.cshtml");
         }
@@ -38,28 +39,58 @@ namespace Conembador.Controllers
 
             if (ModelState.IsValid)
             {
-                //TesteInsert01 teste = new TesteInsert01();
-                //teste.TesteInsertAbc(Itens);
+                await TesteInsertAbc(Itens);
                 return RedirectToAction("Teste001");
             }
             return View("~/Views/Teste01/Teste001.cshtml");
         }
 
-        public async Task<IActionResult> ApresentarEdi(int id)
+        [HttpGet]
+        public async Task<IActionResult> EdiApresentar()
         {
-            var arquivo = await _context.Arquivos
-                .Include(a => a.ItensArquivo)
-                .FirstOrDefaultAsync(a => a.id_arquivo == id);
+            await Console.Out.WriteLineAsync("Entrou aqui");
+            // Tente buscar a lista de arquivos
+            var arquivos = await _context.Arquivos.ToListAsync();
 
-            if (arquivo == null)
+            // Verifique se arquivos é nulo ou não
+            if (arquivos == null)
             {
-                return NotFound();
+                // Adicione um log para depuração
+                _logger.LogError("A lista de arquivos está nula");
+                return View(new List<Arquivo>()); // Retorne uma lista vazia para evitar o NullReferenceException
             }
 
-            await Console.Out.WriteLineAsync($"{arquivo.NomeEdi}");
-
-            return View(arquivo);
+            // Passe a lista de arquivos para a view
+            return View(arquivos);
         }
 
+        private async Task TesteInsertAbc(List<Itens> itens)
+        {
+            Arquivo arquivo = new Arquivo
+            {
+                NomeEdi = "Teste01",
+                Versao = 1,
+                ItensArquivo = new List<Itens>()
+            };
+
+            _context.Arquivos.Add(arquivo);
+
+            foreach (var item in itens)
+            {
+                item.id_arquivo = arquivo.id_arquivo;
+                arquivo.ItensArquivo.Add(item);
+                _context.Itens.Add(item);
+            }
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation($"Arquivo: {arquivo.NomeEdi}, Versão: {arquivo.Versao}");
+
+            foreach (var item in arquivo.ItensArquivo)
+            {
+                _logger.LogInformation($"Item: {item.Descricao}, Início: {item.Inicio}, Fim: {item.Fim}");
+            }
+
+        }
     }
 }
