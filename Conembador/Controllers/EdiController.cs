@@ -3,7 +3,6 @@ using Conembador.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using TesteInsert;
 
 
 
@@ -21,32 +20,13 @@ namespace Conembador.Controllers
         }
 
         [HttpGet]
-        public IActionResult Teste001()
+        public IActionResult CadastrarItem()
         {
-            return View("~/Views/Teste01/Teste001.cshtml");
-        }
-        [HttpGet]
-        public IActionResult ApresentarEdi()
-        {
-            Console.WriteLine("Entrou aqui 01");
-            //return RedirectToPage("/Views/Teste01/ApresentarEdi"); // ainda não consegui fazer o Razer funcionar, ficará para imprementações futuras.
-            return View("~/Views/Teste01/ApresentarEdi.cshtml");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EnviarRespostas(List<Itens> Itens)
-        {
-
-            if (ModelState.IsValid)
-            {
-                await TesteInsertAbc(Itens);
-                return RedirectToAction("Teste001");
-            }
-            return View("~/Views/Teste01/Teste001.cshtml");
+            return View("~/Views/Edi/CadastrarItem.cshtml");
         }
 
         [HttpGet]
-        public async Task<IActionResult> EdiApresentar()
+        public async Task<IActionResult> ApresentarEdi()
         {
             await Console.Out.WriteLineAsync("Entrou aqui");
             // Tente buscar a lista de arquivos
@@ -61,7 +41,7 @@ namespace Conembador.Controllers
             }
 
             // Passe a lista de arquivos para a view
-            return View(arquivos);
+            return View("~/Views/Edi/ApresentarEdi.cshtml", arquivos);
         }
 
         private async Task TesteInsertAbc(List<Itens> itens)
@@ -91,6 +71,17 @@ namespace Conembador.Controllers
                 _logger.LogInformation($"Item: {item.Descricao}, Início: {item.Inicio}, Fim: {item.Fim}");
             }
 
+        }
+        [HttpPost]
+        public async Task<IActionResult> EnviarRespostas(List<Itens> Itens)
+        {
+
+            if (ModelState.IsValid)
+            {
+                await TesteInsertAbc(Itens);
+                return RedirectToAction("CadastrarItem");
+            }
+            return View("~/Views/Edi/CadastrarItem.cshtml");
         }
     }
 }

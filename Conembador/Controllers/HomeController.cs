@@ -2,7 +2,6 @@ using Conembador.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using TesteInsert;
 
 namespace Conembador.Controllers
 {
@@ -25,9 +24,9 @@ namespace Conembador.Controllers
             return View();
         }
 
-        public IActionResult Teste001() // Adicione esta ação para a página Teste001
+        public IActionResult CadastrarItem() // Adicione esta ação para a página CadastrarItem
         {
-            return View(); // Retorna a view Teste001.cshtml
+            return View(); // Retorna a view CadastrarItem.cshtml
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

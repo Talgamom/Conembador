@@ -35,23 +35,16 @@ app.MapControllerRoute(
 
 
 app.MapControllerRoute(
-    name: "Teste001",
-    pattern: "Teste01/Teste001", // O padrão da URL para acessar sua página
-    defaults: new { controller = "Edi", action = "Teste001" } // O controller e a action que devem ser invocados
+    name: "CadastrarItem",
+    pattern: "Edi/CadastrarItem", // O padrão da URL para acessar sua página
+    defaults: new { controller = "Edi", action = "CadastrarItem" } // O controller e a action que devem ser invocados
 );
 
 app.MapControllerRoute(
-    name: "Teste001",
-    pattern: "Teste01/ApresentarEdi", // O padrão da URL para acessar sua página
+    name: "CadastrarItem",
+    pattern: "Edi/ApresentarEdi", // O padrão da URL para acessar sua página
     defaults: new { controller = "Edi", action = "ApresentarEdi" } // O controller e a action que devem ser invocados
 );
-/*
-app.MapControllerRoute(
-    name: "Teste001",
-    pattern: "Teste01/ApresentarEdi", // O padrão da URL para acessar sua página
-    defaults: new { controller = "Teste", action = "ApresentarEdi" } // O controller e a action que devem ser invocados
-);
-*/
 
 app.MapRazorPages();
 
