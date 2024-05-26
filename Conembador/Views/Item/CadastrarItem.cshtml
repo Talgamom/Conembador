@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model Conembador.Models.Itens
+@{
+    ViewData["Title"] = "Cadastrar Item";
+    var arquivos = ViewBag.Arquivos as List<Conembador.Models.Arquivo>;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Formulário de Exemplo</title>
@@ -30,12 +36,23 @@
             });
         });
     </script>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <h2>Conemb</h2>
-    <form asp-action="EnviarRespostas" asp-controller="Edi" method="post">
+    <form asp-action="EnviarRespostas" asp-controller="Item" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_arquivo">Selecione o Arquivo:</label>
+                <select id="id_arquivo" name="id_arquivo" class="form-control" required>
+                    <option value="">Selecione um arquivo</option>
+                    @foreach (var arquivo in arquivos)
+                    {
+                        <option value="@arquivo.id_arquivo">@arquivo.NomeEdi - Versão: @arquivo.Versao</option>
+                    }
+                </select>
+            </div>
+        </div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="Itens_0__Descricao">Descricao:</label>

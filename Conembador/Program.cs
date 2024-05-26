@@ -1,6 +1,5 @@
 using Conembador.Contexto;
 using Microsoft.EntityFrameworkCore;
-using TesteInsert;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,8 +35,8 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "CadastrarItem",
-    pattern: "Edi/CadastrarItem", // O padrão da URL para acessar sua página
-    defaults: new { controller = "Edi", action = "CadastrarItem" } // O controller e a action que devem ser invocados
+    pattern: "Item/CadastrarItem", // O padrão da URL para acessar sua página
+    defaults: new { controller = "Item", action = "CadastrarItem" } // O controller e a action que devem ser invocados
 );
 
 app.MapControllerRoute(

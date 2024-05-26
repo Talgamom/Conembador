@@ -1,0 +1,100 @@
+﻿@model Conembador.Models.Arquivo
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Arquivo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .item-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .item-list li {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+
+                .item-list li:hover {
+                    background-color: #f1f1f1;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Detalhes do Arquivo</h2>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">@Model.id_arquivo</h3>
+                <h3 class="card-title">@Model.NomeEdi</h3>
+                <p class="card-text">Versão: @Model.Versao</p>
+                <h4 class="mt-4">Itens:</h4>
+                @if (Model.ItensArquivo != null && Model.ItensArquivo.Any())
+                {
+                    <ul class="item-list">
+                        @foreach (var item in Model.ItensArquivo)
+                        {
+                            <li>
+                                <strong>Descrição:</strong> @item.Descricao<br>
+                                <strong>Início:</strong> @item.Inicio<br>
+                                <strong>Fim:</strong> @item.Fim
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        Nenhum item encontrado.
+                    </div>
+                }
+            </div>
+        </div>
+        <a href="@Url.Action("ApresentarEdi", "Edi")" class="btn btn-secondary mt-4">Voltar</a>
+
+        <!-- Importar Arquivo TXT -->
+        <div class="mt-4">
+            <input type="file" id="fileInput" class="form-control-file">
+            <button type="button" class="btn btn-primary mt-2" onclick="importarArquivo()">Importar Arquivo</button>
+        </div>
+        <form id="comparadorForm" method="post" action="@Url.Action("Comparador", "Edi")" style="display: none;">
+            <textarea name="fileContent" id="fileContent"></textarea>
+            <input type="hidden" name="NomeEdi" value="@Model.NomeEdi">
+            <input type="hidden" name="Versao" value="@Model.Versao">
+            <input type="hidden" name="id_arquivo" value="@Model.id_arquivo">
+            <!-- Inclua outros campos do modelo Arquivo conforme necessário -->
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function importarArquivo() {
+            const input = document.getElementById('fileInput');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const content = e.target.result;
+                    document.getElementById('fileContent').value = content;
+
+                    // Submeter o formulário para a ação Comparador
+                    document.getElementById('comparadorForm').submit();
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Nenhum arquivo selecionado");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿@model Conembador.Models.Arquivo
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comparador</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .item-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .item-list li {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+
+                .item-list li:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .file-content {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .processed-data {
+            white-space: pre-wrap;
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Comparador</h2>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">@Model.NomeEdi</h3>
+                <p class="card-text">Versão: @Model.Versao</p>
+                <h4 class="mt-4">Itens:</h4>
+                @if (Model.ItensArquivo != null && Model.ItensArquivo.Any())
+                {
+                    <ul class="item-list">
+                        @foreach (var item in Model.ItensArquivo)
+                        {
+                            <li>
+                                <strong>Descrição:</strong> @item.Descricao<br>
+                                <strong>Início:</strong> @item.Inicio<br>
+                                <strong>Fim:</strong> @item.Fim<br>
+                                <div class="processed-data">
+                                    @ViewBag.ProcessedData[Model.ItensArquivo.IndexOf(item)]
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        Nenhum item encontrado.
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="mt-4">
+            <h4>Conteúdo do Arquivo Importado:</h4>
+            <div class="file-content">@ViewBag.FileContent</div>
+        </div>
+        <a href="@Url.Action("ApresentarEdi", "Edi")" class="btn btn-secondary mt-4">Voltar</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

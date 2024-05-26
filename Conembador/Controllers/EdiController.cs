@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-
-
 namespace Conembador.Controllers
 {
     public class EdiController : Controller
@@ -17,12 +15,6 @@ namespace Conembador.Controllers
         {
             _logger = logger;
             _context = context;
-        }
-
-        [HttpGet]
-        public IActionResult CadastrarItem()
-        {
-            return View("~/Views/Edi/CadastrarItem.cshtml");
         }
 
         [HttpGet]
@@ -43,45 +35,44 @@ namespace Conembador.Controllers
             // Passe a lista de arquivos para a view
             return View("~/Views/Edi/ApresentarEdi.cshtml", arquivos);
         }
-
-        private async Task TesteInsertAbc(List<Itens> itens)
-        {
-            Arquivo arquivo = new Arquivo
-            {
-                NomeEdi = "Teste01",
-                Versao = 1,
-                ItensArquivo = new List<Itens>()
-            };
-
-            _context.Arquivos.Add(arquivo);
-
-            foreach (var item in itens)
-            {
-                item.id_arquivo = arquivo.id_arquivo;
-                arquivo.ItensArquivo.Add(item);
-                _context.Itens.Add(item);
-            }
-
-            await _context.SaveChangesAsync();
-
-            _logger.LogInformation($"Arquivo: {arquivo.NomeEdi}, Versão: {arquivo.Versao}");
-
-            foreach (var item in arquivo.ItensArquivo)
-            {
-                _logger.LogInformation($"Item: {item.Descricao}, Início: {item.Inicio}, Fim: {item.Fim}");
-            }
-
-        }
+        /*
         [HttpPost]
-        public async Task<IActionResult> EnviarRespostas(List<Itens> Itens)
+        public IActionResult Comparador(string fileContent, Arquivo model)
         {
-
-            if (ModelState.IsValid)
+            if (model.ItensArquivo == null || !model.ItensArquivo.Any())
             {
-                await TesteInsertAbc(Itens);
-                return RedirectToAction("CadastrarItem");
+                model.ItensArquivo = _context.Itens.Where(i => i.id_arquivo == model.id_arquivo).ToList();                
             }
-            return View("~/Views/Edi/CadastrarItem.cshtml");
+            ViewBag.FileContent = fileContent;
+            return View("~/Views/Comparador/Comparador.cshtml", model);
         }
+        */
+        [HttpPost]
+        public IActionResult Comparador(string fileContent, Arquivo model)
+        {
+            if (model.ItensArquivo == null || !model.ItensArquivo.Any())
+            {
+                model.ItensArquivo = _context.Itens.Where(i => i.id_arquivo == model.id_arquivo).ToList();
+            }
+
+            // Processar o conteúdo do arquivo TXT conforme as posições de início e fim
+            var processedData = new List<string>();
+            foreach (var item in model.ItensArquivo)
+            {
+                if (item.Inicio <= fileContent.Length && item.Fim <= fileContent.Length && item.Inicio <= item.Fim)
+                {
+                    processedData.Add(fileContent.Substring(item.Inicio - 1, item.Fim - item.Inicio + 1));
+                }
+                else
+                {
+                    processedData.Add("Dados fora do intervalo do arquivo");
+                }
+            }
+
+            ViewBag.ProcessedData = processedData;
+            ViewBag.FileContent = fileContent;
+            return View("~/Views/Comparador/Comparador.cshtml", model);
+        }
+
     }
 }
