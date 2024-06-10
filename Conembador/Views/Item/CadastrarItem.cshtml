@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Cadastrar Item";
     var arquivos = ViewBag.Arquivos as List<Conembador.Models.Arquivo>;
+    var itens = ViewBag.Itens as List<Conembador.Models.Itens>;
+    var selectedArquivoId = ViewBag.id_arquivo as int?;//na viewbag, era id_arquivo, por isso parou de funcionar quando alterei o nome de forma indevida sem prestar atenção!!!
 }
 
 <!DOCTYPE html>
@@ -11,7 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            var contador = 0;
+            var contador = @itens?.Count ?? 0;
 
             $("#adicionarCampo").click(function () {
                 contador++;
@@ -43,37 +45,40 @@
     <form asp-action="EnviarRespostas" asp-controller="Item" method="post">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <label for="id_arquivo">Selecione o Arquivo:</label>
-                <select id="id_arquivo" name="id_arquivo" class="form-control" required>
-                    <option value="">Selecione um arquivo</option>
-                    @foreach (var arquivo in arquivos)
-                    {
-                        <option value="@arquivo.id_arquivo">@arquivo.NomeEdi - Versão: @arquivo.Versao</option>
-                    }
-                </select>
+                <label>Arquivo Selecionado:</label>
+                <input type="hidden" id="id_arquivo" name="id_arquivo" value="@selectedArquivoId" />
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Descricao">Descricao:</label>
-                <input type="text" class="form-control" id="Itens_0__Descricao" name="Itens[0].Descricao">
-            </div>
 
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Inicio">Inicio:</label>
-                <input type="number" class="form-control" id="Itens_0__Inicio" name="Itens[0].Inicio">
-            </div>
+        @if (itens != null && itens.Count > 0)
+        {
+            <div id="itensExistentes">
+                @for (int i = 0; i < itens.Count; i++)
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Itens_@(i)__Descricao">Descricao:</label>
+                            <input type="text" class="form-control" id="Itens_@(i)__Descricao" name="Itens[@(i)].Descricao" value="@itens[i].Descricao">
+                        </div>
 
-            <div class="form-group col-md-4">
-                <label for="Itens_0__Fim">Fim:</label>
-                <input type="number" class="form-control" id="Itens_0__Fim" name="Itens[0].Fim">
+                        <div class="form-group col-md-4">
+                            <label for="Itens_@(i)__Inicio">Inicio:</label>
+                            <input type="number" class="form-control" id="Itens_@(i)__Inicio" name="Itens[@(i)].Inicio" value="@itens[i].Inicio">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Itens_@(i)__Fim">Fim:</label>
+                            <input type="number" class="form-control" id="Itens_@(i)__Fim" name="Itens[@(i)].Fim" value="@itens[i].Fim">
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+        }
 
         <div id="camposExtras"></div>
 
         <button type="button" class="btn btn-primary" id="adicionarCampo">Adicionar Mais</button>
-        <button type="submit" class="btn btn-success">Enviar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
     </form>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

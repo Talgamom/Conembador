@@ -20,7 +20,6 @@ namespace Conembador.Controllers
         [HttpGet]
         public async Task<IActionResult> ApresentarEdi()
         {
-            await Console.Out.WriteLineAsync("Entrou aqui");
             // Tente buscar a lista de arquivos
             var arquivos = await _context.Arquivos.ToListAsync();
 
@@ -28,25 +27,13 @@ namespace Conembador.Controllers
             if (arquivos == null)
             {
                 // Adicione um log para depuração
-                _logger.LogError("A lista de arquivos está nula");
+                _logger.LogError("850340662337e2f273e1947f6769a4b8d872f5d3cddd7cb9f4933f7ac247290d // A lista de arquivos está nula.");
                 return View(new List<Arquivo>()); // Retorne uma lista vazia para evitar o NullReferenceException
             }
 
             // Passe a lista de arquivos para a view
             return View("~/Views/Edi/ApresentarEdi.cshtml", arquivos);
         }
-        /*
-        [HttpPost]
-        public IActionResult Comparador(string fileContent, Arquivo model)
-        {
-            if (model.ItensArquivo == null || !model.ItensArquivo.Any())
-            {
-                model.ItensArquivo = _context.Itens.Where(i => i.id_arquivo == model.id_arquivo).ToList();                
-            }
-            ViewBag.FileContent = fileContent;
-            return View("~/Views/Comparador/Comparador.cshtml", model);
-        }
-        */
         [HttpPost]
         public IActionResult Comparador(string fileContent, Arquivo model)
         {

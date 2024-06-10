@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<Conembador.Models.Arquivo>
 
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Arquivos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -11,28 +13,18 @@
             width: 90%;
         }
 
-        .button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
+        .custom-button {
             margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
             transition-duration: 0.4s;
         }
 
-            .button:hover {
-                background-color: #0069d9;
+            .custom-button:hover {
+                background-color: #0056b3;
                 color: white;
             }
 
-            .button:active {
-                background-color: #0056b3;
+            .custom-button:active {
+                background-color: #004080;
                 box-shadow: 0 5px #666;
                 transform: translateY(4px);
             }
@@ -40,7 +32,7 @@
 </head>
 <body>
     <div class="container">
-        <h2 class="my-4">Lista de Arquivos</h2>
+        <h2 class="my-4 text-center">Lista de Arquivos</h2>
         @if (Model != null && Model.Any())
         {
             <div class="table-container">
@@ -50,7 +42,7 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Versão</th>
-                            <th>Ações</th>
+                            <th colspan="2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +54,12 @@
                                 <td>@arquivo.Versao</td>
                                 <td>
                                     <form method="get" asp-controller="Item" asp-action="Detalhes" asp-route-id="@arquivo.id_arquivo" style="display:inline;">
-                                        <button type="submit" class="button btn btn-primary">Ver Detalhes</button>
+                                        <button type="submit" class="btn btn-primary custom-button">Ver Detalhes</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="get" asp-controller="Item" asp-action="CadastrarItem" asp-route-id="@arquivo.id_arquivo" style="display:inline;">
+                                        <button type="submit" class="btn btn-success custom-button">Cadastrar Itens</button>
                                     </form>
                                 </td>
                             </tr>
@@ -73,7 +70,7 @@
         }
         else
         {
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning text-center" role="alert">
                 Nenhum arquivo encontrado.
             </div>
         }
