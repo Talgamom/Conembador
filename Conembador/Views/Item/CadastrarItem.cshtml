@@ -3,7 +3,7 @@
     ViewData["Title"] = "Cadastrar Item";
     var arquivos = ViewBag.Arquivos as List<Conembador.Models.Arquivo>;
     var itens = ViewBag.Itens as List<Conembador.Models.Itens>;
-    var selectedArquivoId = ViewBag.id_arquivo as int?;//na viewbag, era id_arquivo, por isso parou de funcionar quando alterei o nome de forma indevida sem prestar atenção!!!
+    var selectedArquivoId = ViewBag.id_arquivo as int?;
 }
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
                     '<label for="Itens_' + contador + '__Descricao">Descricao:</label>' +
                     '<input type="text" class="form-control" id="Itens_' + contador + '__Descricao" name="Itens[' + contador + '].Descricao">' +
                     '</div>' +
-
+                  
                     '<div class="form-group col-md-4">' +
                     '<label for="Itens_' + contador + '__Inicio">Inicio:</label>' +
                     '<input type="number" class="form-control" id="Itens_' + contador + '__Inicio" name="Itens[' + contador + '].Inicio">' +
