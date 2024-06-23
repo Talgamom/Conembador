@@ -15,8 +15,7 @@
         $(document).ready(function () {
             var contador = @itens?.Count ?? 0;
 
-            $("#adicionarCampo").click(function () {
-                contador++;
+            $("#adicionarCampo").click(function () {                
                 var novoCampo = '<div class="form-row">' +
                     '<div class="form-group col-md-4">' +
                     '<label for="Itens_' + contador + '__Descricao">Descricao:</label>' +
@@ -33,7 +32,7 @@
                     '<input type="number" class="form-control" id="Itens_' + contador + '__Fim" name="Itens[' + contador + '].Fim">' +
                     '</div>' +
                     '</div>';
-
+                contador++;
                 $("#camposExtras").append(novoCampo);
             });
         });
