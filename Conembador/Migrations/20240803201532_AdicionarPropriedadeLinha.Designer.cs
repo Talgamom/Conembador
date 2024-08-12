@@ -3,6 +3,7 @@ using Conembador.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Conembador.Migrations
 {
     [DbContext(typeof(ConembadorContext))]
-    partial class ConembadorContextModelSnapshot : ModelSnapshot
+    [Migration("20240803201532_AdicionarPropriedadeLinha")]
+    partial class AdicionarPropriedadeLinha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,11 +26,11 @@ namespace Conembador.Migrations
 
             modelBuilder.Entity("Conembador.Models.Arquivo", b =>
                 {
-                    b.Property<int>("Id_arquivo")
+                    b.Property<int>("id_arquivo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_arquivo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_arquivo"));
 
                     b.Property<string>("NomeEdi")
                         .IsRequired()
@@ -36,18 +39,18 @@ namespace Conembador.Migrations
                     b.Property<double>("Versao")
                         .HasColumnType("float");
 
-                    b.HasKey("Id_arquivo");
+                    b.HasKey("id_arquivo");
 
                     b.ToTable("arquivo", (string)null);
                 });
 
             modelBuilder.Entity("Conembador.Models.Itens", b =>
                 {
-                    b.Property<int>("Id_item")
+                    b.Property<int>("id_item")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_item"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_item"));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -56,18 +59,18 @@ namespace Conembador.Migrations
                     b.Property<int>("Fim")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_arquivo")
-                        .HasColumnType("int");
-
                     b.Property<int>("Inicio")
                         .HasColumnType("int");
 
-                    b.Property<int>("Linha")
+                    b.Property<int>("id_arquivo")
                         .HasColumnType("int");
 
-                    b.HasKey("Id_item");
+                    b.Property<int>("linha")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Id_arquivo");
+                    b.HasKey("id_item");
+
+                    b.HasIndex("id_arquivo");
 
                     b.ToTable("item", (string)null);
                 });
@@ -76,7 +79,7 @@ namespace Conembador.Migrations
                 {
                     b.HasOne("Conembador.Models.Arquivo", null)
                         .WithMany("ItensArquivo")
-                        .HasForeignKey("Id_arquivo")
+                        .HasForeignKey("id_arquivo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

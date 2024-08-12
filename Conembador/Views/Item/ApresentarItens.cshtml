@@ -33,7 +33,7 @@
         <h2 class="my-4">Detalhes do Arquivo</h2>
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">@Model.id_arquivo</h3>
+                <h3 class="card-title">@Model.Id_arquivo</h3>
                 <h3 class="card-title">@Model.NomeEdi</h3>
                 <p class="card-text">Versão: @Model.Versao</p>
                 <h4 class="mt-4">Itens:</h4>
@@ -45,7 +45,8 @@
                             <li>
                                 <strong>Descrição:</strong> @item.Descricao<br>
                                 <strong>Início:</strong> @item.Inicio<br>
-                                <strong>Fim:</strong> @item.Fim
+                                <strong>Fim:</strong> @item.Fim<br>
+                                <strong>Linha:</strong> @item.Linha
                             </li>
                         }
                     </ul>
@@ -69,7 +70,7 @@
             <textarea name="fileContent" id="fileContent"></textarea>
             <input type="hidden" name="NomeEdi" value="@Model.NomeEdi">
             <input type="hidden" name="Versao" value="@Model.Versao">
-            <input type="hidden" name="id_arquivo" value="@Model.id_arquivo">
+            <input type="hidden" name="id_arquivo" value="@Model.Id_arquivo">
             <!-- Inclua outros campos do modelo Arquivo conforme necessário -->
         </form>
     </div>

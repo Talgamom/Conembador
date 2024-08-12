@@ -1,0 +1,2 @@
+﻿"DefaultConnection": "Data Source=localhost;Initial Catalog=teste;Integrated Security=True;TrustServerCertificate=true;"
+"DefaultConnection": "Data Source=    ;Initial Catalog=TesteBancoAbc;Integrated Security=True;TrustServerCertificate=true;"

@@ -1,8 +1,12 @@
-﻿using Conembador.Contexto;
+﻿using System;
+using Conembador.Contexto;
 using Conembador.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Conembador.Controllers
 {
@@ -39,20 +43,31 @@ namespace Conembador.Controllers
         {
             if (model.ItensArquivo == null || !model.ItensArquivo.Any())
             {
-                model.ItensArquivo = _context.Itens.Where(i => i.id_arquivo == model.id_arquivo).ToList();
+                model.ItensArquivo = _context.Itens.Where(i => i.Id_arquivo == model.Id_arquivo).ToList();
             }
 
-            // Processar o conteúdo do arquivo TXT conforme as posições de início e fim
+            // Dividir o conteúdo do arquivo em linhas
+            var linhas = fileContent.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
             var processedData = new List<string>();
-            foreach (var item in model.ItensArquivo)
+
+            int linhaNumero = 0;
+
+            // Processar cada linha
+            foreach (var linha in linhas)
             {
-                if (item.Inicio <= fileContent.Length && item.Fim <= fileContent.Length && item.Inicio <= item.Fim)
+                linhaNumero++;
+                Console.WriteLine($"Indíce: {linhaNumero}, Valor:{linha}");
+                foreach (var item in model.ItensArquivo)
                 {
-                    processedData.Add(fileContent.Substring(item.Inicio - 1, item.Fim - item.Inicio + 1));
-                }
-                else
-                {
-                    processedData.Add("Dados fora do intervalo do arquivo");
+                    if (item.Inicio <= linha.Length && item.Fim <= linha.Length && item.Inicio <= item.Fim && item.Linha == linhaNumero)
+                    //if ( item.Linha == linhaNumero)//2, 1
+                    {
+                        processedData.Add(linha.Substring(item.Inicio - 1, item.Fim - item.Inicio + 1));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Dados fora do intervalo do arquivo: {item.Linha} ,{linhaNumero}");
+                    }
                 }
             }
 

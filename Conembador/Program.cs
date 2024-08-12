@@ -45,6 +45,12 @@ app.MapControllerRoute(
     defaults: new { controller = "Edi", action = "ApresentarEdi" } // O controller e a action que devem ser invocados
 );
 
+app.MapControllerRoute(
+    name: "CadastrarArquivo",
+    pattern: "Arquivo/CadastrarArquivo", // O padrão da URL para acessar sua página
+    defaults: new { controller = "Arquivo", action = "CadastrarArquivo" } // O controller e a action que devem ser invocados
+);
+
 app.MapRazorPages();
 
 app.Run();
